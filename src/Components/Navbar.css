@@ -1,0 +1,8 @@
+.imageNav {
+    display: block; 
+    margin: 0 auto;
+    height: 120px; 
+    width: auto;
+    object-fit: cover; 
+  }
+  
