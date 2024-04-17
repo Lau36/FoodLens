@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
 import "../Home/Home.css";
+import logo from "../Resources/LogoApp.png"
 
-//Funcion principal
 function Home() {
-
   return (
-
-    <h1>hola</h1>
+    <div className="home-container">
+      <div className="content">
+        <img src={logo} alt="Logo" className="logo" />
+        <button className="button">Comenzar</button>
+      </div>
+    </div>
   );
 }
 
