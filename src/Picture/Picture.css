@@ -22,29 +22,34 @@
 }
 
 .defaultImage{
-    height: 700px;
+    height: 600px;
     width: 900px;
     filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
 }
 
 .buttons{
-    margin-top: -90px;
+    margin-top: 1px;
 }
 
-.buttonTakePicture, .buttonUpload, .createRecipe{
+.buttonOpenCamera, .buttonUpload, .createRecipe, .buttonTakePicture{
     color: white;
     background-color: #E47F21;
     font-weight: bolder;
     border: none;
-    padding: 15px;
-    margin: 10px;
+    
     border-radius: 10px;
     filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
     font-size: larger;
+    cursor: pointer;
     
 }
 
-.buttonTakePicture, .buttonUpload{
+.buttonOpenCamera, .buttonUpload, .createRecipe{
+    padding: 15px;
+    margin: 10px;
+}
+
+.buttonOpenCamera, .buttonUpload{
     width: 200px;
 }
 
@@ -59,3 +64,13 @@
     height: 180px;
     margin-bottom: 10px;
 } 
+
+.buttonTakePicture{
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.takePicture{
+    width: 50px;
+    height: 40px;
+}
