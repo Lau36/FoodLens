@@ -5,6 +5,7 @@ import defaultImage from "../Resources/dafaultImage.png";
 import recipeImage from "../Resources/recipeImage.png";
 import takePicture from "../Resources/takePicture.png";
 import "../Picture/Picture.css";
+import { Link } from "react-router-dom";
 
 function Picture() {
   const [image, setImage] = useState(defaultImage); /** this var has the image*/
@@ -83,10 +84,12 @@ function Picture() {
           </div>
         </div>
         <div className="container2">
+          <Link to="/Receta">
           <button className="createRecipe">
             <img src={recipeImage} alt="Recipe" className="recipeImage" />
             Generar receta
           </button>
+          </Link>
         </div>
       </div>
     </>

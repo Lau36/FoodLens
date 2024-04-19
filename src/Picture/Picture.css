@@ -1,30 +1,8 @@
-.containerPageImages{
-    display: flex;
-}
-
-.container1{
-    flex: 1;
-    padding: 50px;
-    align-self: center;
-    margin-left: 10%;
-}
-
-.container2{
-    flex: 1;
-    padding: 60px;
-    align-self: center;
-}
 
 .image, .buttons, .recipeImage{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.defaultImage{
-    height: 600px;
-    width: 900px;
-    filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
 }
 
 .buttons{
@@ -53,12 +31,6 @@
     width: 200px;
 }
 
-.createRecipe{
-    width: 236px;
-    height: 244px;
-    margin-left: 10%;
-}
-
 .recipeImage{
     width: 213px;
     height: 180px;
@@ -74,3 +46,63 @@
     width: 50px;
     height: 40px;
 }
+
+.containerPageImages{
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.container1{
+    flex: 1;
+    padding: 2%;
+    align-self: center;
+    width: 100%;
+    max-width: 600px; 
+    margin: 0 auto; 
+}
+
+.container2{
+    flex: 1;
+    padding: 2%;
+    align-self: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+}
+
+.createRecipe{
+    width: 236px;
+    height: 244px;
+    margin: 0 auto; 
+    text-align: center; 
+}
+
+
+.defaultImage{
+    height: auto;
+    max-width: 100%;
+    filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
+}
+
+@media (min-width: 768px) {
+    .container1 {
+        width: 50%; 
+    }
+    
+    .container2 {
+        width: 50%;
+    }
+}
+
+a {
+    text-decoration: none; 
+    padding: 10px 20px; 
+    color: white; 
+    border-radius: 5px; 
+    text-align: center; 
+  }
+
