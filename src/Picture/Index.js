@@ -1,6 +1,5 @@
 import Navbar from "../Components/Navbar";
 import { useState, useRef, useCallback } from "react";
-import { endpoints } from "../Services/Index";
 import { Link } from "react-router-dom";
 import Webcam from "react-webcam";
 import defaultImage from "../Resources/dafaultImage.png";
@@ -9,10 +8,14 @@ import takePicture from "../Resources/takePicture.png";
 import flipCamera from "../Resources/flipCamera.png";
 import Swal from "sweetalert2";
 
+import axios from "axios";
+import { URL, endpoints } from "../Services/Index";
+
 import "../Picture/Picture.css";
 
 function Picture() {
   const [image, setImage] = useState(defaultImage); /** this var has the image*/
+  const [postimage, setpostimage] = useState(null);
   const [openCamera, setOpenCamera] = useState(false);
   const [ingredients, setIngredients] = useState(null);
   const [cameraFacingMode, setCameraFacingMode] = useState("user");
@@ -41,9 +44,12 @@ function Picture() {
     document.getElementById("fileInput").click();
   };
 
+  // Esta funcion hace el set de la imagen, tuve que crear dos variables, una para la imagen a mandar y otra para que
+  // cambie la imagen que se visualiza, obvio esto lo pueden acomodar entendiendo mas de esto, hice lo que pude
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setpostimage(e.target.files[0]);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result);
@@ -53,21 +59,28 @@ function Picture() {
     if (!file) {
       console.log("No se seleccionó ningun archivo");
     }
-  };
+  }
 
-  const getIngredients = async () => {
-    if (image === defaultImage) {
-      onError();
-    } else {
-      try {
-        const response = await endpoints.getIngredients(image);
-        setIngredients(response);
-        console.log("estos son los ingredientes", ingredients);
-      } catch (error) {
-        console.error("Ocurrió un error", error);
-      }
-    }
-  };
+  // Esta funcion hace la peticion, guiense de ella si quieren cambiar algo 
+  const getIngredients = (e) => {
+    const formData = new FormData();
+    formData.append(
+      "file",
+      postimage,
+      postimage.name
+    );
+
+    const requesOptions = {
+      method: 'POST',
+      body: formData
+    };
+
+    fetch("http://127.0.0.1:8000/get-ingredients", requesOptions)
+    .then(response => response.json()
+    .then(function(response){
+      console.log(response)
+    }))
+  }
 
   const onError = (error) => {
     Swal.fire({

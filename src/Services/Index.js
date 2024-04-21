@@ -1,33 +1,30 @@
-const URL = "http://localhost:8080";
+import axios from 'axios';
+const URL = "http://127.0.0.1:8000";
 
 const endpoints = {
   getIngredients: async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await fetch(`${URL}/get-ingredients`, {
-        method: "POST",
-        body: formData,
+      const response = await axios.post(`${URL}/get-ingredients`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
-      const data = await response.json();
-      return data.ingredients;
+      return response.data.ingredients;
     } catch (error) {
       console.error("Error al obtener los ingredientes:", error);
       return null;
     }
   },
-
   getRecipe: async (context) => {
     try {
-      const response = await fetch(`${URL}/get-recipe`, {
-        method: "POST",
+      const response = await axios.post(`${URL}/get-recipe`, context, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(context),
       });
-      const data = await response.json();
-      return data.message;
+      return response.data.message;
     } catch (error) {
       console.error("Error al obtener la receta:", error);
       return null;
@@ -35,4 +32,4 @@ const endpoints = {
   },
 };
 
-export { endpoints };
+export { endpoints, URL };
