@@ -92,7 +92,7 @@ function Picture() {
                 audio={false}
                 ref={webcam}
                 screenshotFormat="image/png"
-                facingmode={cameraFacingMode}
+                facingMode={cameraFacingMode}
                 className="defaultImage"
               />
             ) : (
