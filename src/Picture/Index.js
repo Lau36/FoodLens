@@ -91,7 +91,7 @@ function Picture() {
                 audio={false}
                 ref={webcam}
                 screenshotFormat="image/png"
-                facingmode={cameraFacingMode}
+                videoConstraints={{ facingMode: cameraFacingMode }}
                 className="defaultImage"
               />
             ) : (
