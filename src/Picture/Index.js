@@ -78,7 +78,6 @@ function Picture() {
       allowOutsideClick: false,
       showCancelButton: false,
     });
-    console.log("este es el error", error);
   };
 
   return (
@@ -92,7 +91,7 @@ function Picture() {
                 audio={false}
                 ref={webcam}
                 screenshotFormat="image/png"
-                facingMode={cameraFacingMode}
+                facingmode={cameraFacingMode}
                 className="defaultImage"
               />
             ) : (
