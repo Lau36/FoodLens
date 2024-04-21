@@ -1,21 +1,39 @@
+import axios from "axios";
 const URL = "http://localhost:8080";
 
 const endpoints = {
-  getIngredients: async (file) => {
+  getIngredients: async (image) => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", image, image.name);
+
     try {
-      const response = await fetch(`${URL}/get-ingredients`, {
-        method: "POST",
-        body: formData,
+      const response = await axios.post(`${URL}/get-ingredients`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      const data = await response.json();
-      return data.ingredients;
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       console.error("Error al obtener los ingredientes:", error);
       return null;
     }
   },
+  // getIngredients: async (file) => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   try {
+  //     const response = await fetch(`${URL}/get-ingredients`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+  //     const data = await response.json();
+  //     return data.ingredients;
+  //   } catch (error) {
+  //     console.error("Error al obtener los ingredientes:", error);
+  //     return null;
+  //   }
+  // },
 
   getRecipe: async (context) => {
     try {

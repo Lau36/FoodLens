@@ -13,6 +13,7 @@ import "../Picture/Picture.css";
 
 function Picture() {
   const [image, setImage] = useState(defaultImage); /** this var has the image*/
+  const [otherImage, setOtherImage] = useState(null);
   const [openCamera, setOpenCamera] = useState(false);
   const [ingredients, setIngredients] = useState(null);
   const [cameraFacingMode, setCameraFacingMode] = useState("user");
@@ -44,6 +45,7 @@ function Picture() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setOtherImage([e.target.file[0]]);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result);
@@ -60,8 +62,8 @@ function Picture() {
       onError();
     } else {
       try {
-        const response = await endpoints.getIngredients(image);
-        setIngredients(response);
+        const response = await endpoints.getIngredients(otherImage);
+        setIngredients(response.ingredients);
         console.log("estos son los ingredientes", ingredients);
       } catch (error) {
         console.error("Ocurrió un error", error);
@@ -69,7 +71,7 @@ function Picture() {
     }
   };
 
-  const onError = (error) => {
+  const onError = () => {
     Swal.fire({
       icon: "warning",
       title: "Algo salió mal",
