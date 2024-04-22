@@ -8,10 +8,9 @@ import recipeImage from "../Resources/recipeImage.png";
 import takePicture from "../Resources/takePicture.png";
 import flipCamera from "../Resources/flipCamera.png";
 import Swal from "sweetalert2";
-
 import "../Picture/Picture.css";
 
-function Picture() {
+export const Picture = () => {
   const [image, setImage] = useState(defaultImage); /** this var has the image*/
   const [otherImage, setOtherImage] = useState(null);
   const [openCamera, setOpenCamera] = useState(false);
@@ -64,7 +63,7 @@ function Picture() {
       try {
         const response = await endpoints.getIngredients(otherImage);
         setIngredients(response.ingredients);
-        console.log("estos son los ingredientes", ingredients);
+        console.log("estos son los ingredientes", response.ingredients);
       } catch (error) {
         console.error("Ocurrió un error", error);
       }
@@ -151,7 +150,7 @@ function Picture() {
                   exacto
                 </p>
               </div>
-              <Link to="/Receta">
+              <Link to={{ pathname: "/Receta", state: { ingredients: ingredients } }}>
                 <button className="createRecipe">Generar receta</button>
               </Link>
             </>
