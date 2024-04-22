@@ -3,6 +3,10 @@ const URL = "http://localhost:8080";
 
 const endpoints = {
   getIngredients: async (image) => {
+    if (!(image instanceof File)) {
+      console.error("El parámetro proporcionado no es un archivo válido.");
+      return null;
+    }
     const formData = new FormData();
     formData.append("file", image, image.name);
 
@@ -19,21 +23,6 @@ const endpoints = {
       return null;
     }
   },
-  // getIngredients: async (file) => {
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   try {
-  //     const response = await fetch(`${URL}/get-ingredients`, {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-  //     const data = await response.json();
-  //     return data.ingredients;
-  //   } catch (error) {
-  //     console.error("Error al obtener los ingredientes:", error);
-  //     return null;
-  //   }
-  // },
 
   getRecipe: async (context) => {
     try {

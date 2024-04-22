@@ -1,6 +1,5 @@
 import Navbar from "../Components/Navbar";
 import { useState, useRef, useCallback } from "react";
-import { endpoints } from "../Services/Index";
 import { Link } from "react-router-dom";
 import Webcam from "react-webcam";
 import defaultImage from "../Resources/dafaultImage.png";
@@ -8,15 +7,15 @@ import recipeImage from "../Resources/recipeImage.png";
 import takePicture from "../Resources/takePicture.png";
 import flipCamera from "../Resources/flipCamera.png";
 import Swal from "sweetalert2";
-
 import "../Picture/Picture.css";
 
 function Picture() {
   const [image, setImage] = useState(defaultImage); /** this var has the image*/
-  const [otherImage, setOtherImage] = useState(null);
+  const [postimage, setpostimage] = useState(null);
   const [openCamera, setOpenCamera] = useState(false);
-  const [ingredients, setIngredients] = useState(null);
+  const [dataIngredients, setDataIngredients] = useState("");
   const [cameraFacingMode, setCameraFacingMode] = useState("user");
+  const [loading, setLoading] = useState(false);
   const webcam = useRef(null);
 
   const openingCamera = () => {
@@ -42,10 +41,15 @@ function Picture() {
     document.getElementById("fileInput").click();
   };
 
+  const handleChangeOtherPicture = () => {
+    setDataIngredients("");
+    setImage(defaultImage);
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setOtherImage([e.target.file[0]]);
+      setpostimage(e.target.files[0]);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result);
@@ -57,17 +61,31 @@ function Picture() {
     }
   };
 
-  const getIngredients = async () => {
+  const handleChange = (e) => {
+    setDataIngredients(e.target.value);
+    console.log("los nuevos ingredientes", dataIngredients);
+  };
+
+  const getIngredients = (e) => {
     if (image === defaultImage) {
       onError();
     } else {
-      try {
-        const response = await endpoints.getIngredients(otherImage);
-        setIngredients(response.ingredients);
-        console.log("estos son los ingredientes", ingredients);
-      } catch (error) {
-        console.error("Ocurrió un error", error);
-      }
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("file", postimage, postimage.name);
+
+      const requesOptions = {
+        method: "POST",
+        body: formData,
+      };
+
+      fetch("http://127.0.0.1:8000/get-ingredients", requesOptions).then(
+        (response) =>
+          response.json().then(function (response) {
+            setLoading(false);
+            setDataIngredients(response.ingredients);
+          })
+      );
     }
   };
 
@@ -132,7 +150,11 @@ function Picture() {
         </div>
 
         <div className="container2">
-          {ingredients ? (
+          {loading ? (
+            <div className="progress-loader">
+              <div className="progress"></div>
+            </div>
+          ) : dataIngredients ? (
             <>
               <div className="card1">
                 <div className="card_ingredients">
@@ -141,8 +163,9 @@ function Picture() {
                     rows="10"
                     type="text"
                     className="card_body"
-                    name="description"
-                    value={ingredients}
+                    name="ingredients"
+                    value={dataIngredients}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -154,6 +177,12 @@ function Picture() {
               <Link to="/Receta">
                 <button className="createRecipe">Generar receta</button>
               </Link>
+              <button
+                className="createRecipe"
+                onClick={handleChangeOtherPicture}
+              >
+                Probar con otra foto
+              </button>
             </>
           ) : (
             <button className="getIngredients" onClick={getIngredients}>
