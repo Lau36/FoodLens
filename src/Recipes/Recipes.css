@@ -2,15 +2,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 70vh; 
+    height: 80vh; 
 }
 
 .container_izquierdo, .container_centro, .container_derecho {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10px; 
-    margin-top: 20px;
+    height: 50px; 
+    margin-top: 100px;
     margin-bottom: 10px;
     margin-left: 10px; 
     margin-right: 10px; 
@@ -64,7 +64,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 3vh;
+    height: 7vh;
+    margin-top: 70px;
 }
 
 .list-unstyled {

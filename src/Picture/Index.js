@@ -10,10 +10,10 @@ import Swal from "sweetalert2";
 import "../Picture/Picture.css";
 
 function Picture() {
-  const [image, setImage] = useState(defaultImage); /** this var has the image*/
+  const [image, setImage] = useState(defaultImage); /* this var has the image*/
   const [postimage, setpostimage] = useState(null);
   const [openCamera, setOpenCamera] = useState(false);
-  const [dataIngredients, setDataIngredients] = useState("");
+  const [ingredients, setIngredients] = useState("");
   const [cameraFacingMode, setCameraFacingMode] = useState("user");
   const [loading, setLoading] = useState(false);
   const webcam = useRef(null);
@@ -42,7 +42,7 @@ function Picture() {
   };
 
   const handleChangeOtherPicture = () => {
-    setDataIngredients("");
+    setIngredients("");
     setImage(defaultImage);
   };
 
@@ -62,8 +62,9 @@ function Picture() {
   };
 
   const handleChange = (e) => {
-    setDataIngredients(e.target.value);
-    console.log("los nuevos ingredientes", dataIngredients);
+    setIngredients(e.target.value);
+    localStorage.setItem("ingredients", JSON.stringify(ingredients));
+    console.log("los nuevos ingredientes", ingredients);
   };
 
   const getIngredients = (e) => {
@@ -83,7 +84,12 @@ function Picture() {
         (response) =>
           response.json().then(function (response) {
             setLoading(false);
-            setDataIngredients(response.ingredients);
+            setIngredients(response.ingredients);
+            localStorage.setItem(
+              "ingredients",
+              JSON.stringify(response.ingredients)
+            );
+            console.log("Ingredientes", ingredients);
           })
       );
     }
@@ -154,7 +160,7 @@ function Picture() {
             <div className="progress-loader">
               <div className="progress"></div>
             </div>
-          ) : dataIngredients ? (
+          ) : ingredients ? (
             <>
               <div className="card1">
                 <div className="card_ingredients">
@@ -164,7 +170,7 @@ function Picture() {
                     type="text"
                     className="card_body"
                     name="ingredients"
-                    value={dataIngredients}
+                    value={ingredients}
                     onChange={handleChange}
                     required
                   />
@@ -174,7 +180,12 @@ function Picture() {
                   exacto
                 </p>
               </div>
-              <Link to="/Receta">
+              <Link
+                to={{
+                  pathname: "/Receta",
+                  state: { ingredients: ingredients },
+                }}
+              >
                 <button className="createRecipe">Generar receta</button>
               </Link>
               <button

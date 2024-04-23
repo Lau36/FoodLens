@@ -1,5 +1,4 @@
 import Navbar from "../Components/Navbar";
-import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Card, Container, Row, Col, Button } from 'react-bootstrap';
 import React, { useEffect, useState } from "react";
@@ -10,21 +9,22 @@ import animationData from '../Resources/Animation - 1713830566540.json';
 import loading from '../Resources/Animation - 1713830916863.json';
 
 function Recipes() {
-    const location = useLocation();
-    const ingredients = location.state;
+    const ingredients = localStorage.getItem("ingredients");
     const [recipeMessage, setRecipeMessage] = useState("");
-
+  
     useEffect(() => {
-        const getRecipe = async () => {
-            try {
-                const response = await endpoints.getRecipe({ ingredients: ingredients });
-                setRecipeMessage(response.message);
-            } catch (error) {
-                console.error("Ocurrió un error al obtener la receta:", error);
-            }
-        };
-
-        getRecipe();
+      const getRecipe = async () => {
+        try {
+          const response = await endpoints.getRecipe({
+            ingredients: ingredients,
+          });
+          setRecipeMessage(response.message);
+        } catch (error) {
+          console.error("Ocurrió un error al obtener la receta:", error);
+        }
+      };
+  
+      getRecipe();
     }, [ingredients]);
 
     if (!recipeMessage) {
