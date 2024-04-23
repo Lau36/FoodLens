@@ -1,0 +1,220 @@
+
+.image, .buttons, .recipeImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons{
+    margin-top: 1px;
+}
+
+.buttonOpenCamera, .buttonUpload, .createRecipe, .buttonTakePicture,.getIngredients, .flipCamera{
+    color: white;
+    background-color: #E47F21;
+    font-weight: bolder;
+    border: none;
+    border-radius: 10px;
+    filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
+    font-size: larger;
+    cursor: pointer;
+    
+}
+
+.buttonOpenCamera, .buttonUpload, .createRecipe, .getIngredients{
+    padding: 15px;
+    margin: 10px;
+}
+
+.buttonOpenCamera, .buttonUpload{
+    width: 200px;
+}
+
+.recipeImage{
+    width: 213px;
+    height: 180px;
+    margin-bottom: 10px;
+} 
+
+.buttonTakePicture, .flipCamera{
+    padding: 10px;
+    margin: 10px;
+}
+
+.takePicture{
+    width: 50px;
+    height: 40px;
+}
+
+.containerPageImages{
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+
+.container1{
+    flex: 1;
+    padding: 2%;
+    align-self: center;
+    width: 100%;
+    max-width: 600px; 
+    margin: 0 auto; 
+}
+
+.container2{
+    flex: 1;
+    padding: 2%;
+    align-self: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+}
+
+.createRecipe{
+    width: 236px;
+    height: 50px;
+    margin: 0 auto; 
+    text-align: center; 
+}
+
+.getIngredients{
+    width: 236px;
+    height: 244px;
+    margin: 0 auto; 
+    text-align: center; 
+}
+
+
+.defaultImage{
+    height: auto;
+    max-width: 100%;
+    filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
+}
+
+@media (min-width: 768px) {
+    .container1 {
+        width: 50%; 
+    }
+    
+    .container2 {
+        width: 50%;
+    }
+
+    .progress-loader {
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 150px;
+        background: #E4A9A5;
+        height: 10px;
+        border-radius: 7px;
+      }
+      
+      .progress {
+        width: 1px;
+        height: 10px;
+        border-radius: 7px;
+        background: #E47F21;
+        transition: 0.5s;
+        animation: loading_44 5s cubic-bezier(.4,1.01,1,1) infinite;
+      }
+      
+      @keyframes loading_44 {
+        0% {
+          width: 0%;
+        }
+      
+        50% {
+          width: 100%;
+        }
+      
+        100% {
+          width: 0%;
+        }
+      }
+}
+
+a {
+    text-decoration: none; 
+    padding: 10px 20px; 
+    color: white; 
+    border-radius: 5px; 
+    text-align: center; 
+  }
+
+  .card_ingredients{
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto; 
+    width: 350px;
+  }
+  
+  .card_title{
+    color: #E47F21;
+    font-weight: bolder;
+  }
+
+  .card_body{
+    border: none;
+    resize: none;
+    border-radius: 10px;
+    height: auto;
+    min-height: 50px;
+    width: 240px;
+    margin-bottom: 10px;
+  }
+
+  .card1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .textCard{
+    font-size: 12px;
+  }
+
+
+  .progress-loader {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(100%, 100%);
+    width: 150px;
+    background: #E4A9A5;
+    height: 10px;
+    border-radius: 7px;
+  }
+  
+  .progress {
+    width: 1px;
+    height: 10px;
+    border-radius: 7px;
+    background: #E47F21;
+    transition: 0.5s;
+    animation: loading_44 5s cubic-bezier(.4,1.01,1,1) infinite;
+  }
+  
+  @keyframes loading_44 {
+    0% {
+      width: 0%;
+    }
+  
+    50% {
+      width: 100%;
+    }
+  
+    100% {
+      width: 0%;
+    }
+  }
