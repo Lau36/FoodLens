@@ -1,18 +1,23 @@
 import Navbar from "../Components/Navbar";
 import { useLocation } from "react-router-dom";
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Card, Container, Row, Col, Button } from 'react-bootstrap';
 import React, { useEffect, useState } from "react";
 import "../Recipes/Recipes.css";
 import { endpoints } from "../Services/Index";
+import Lottie from 'react-lottie';
+import animationData from '../Resources/Animation - 1713830566540.json';
+import loading from '../Resources/Animation - 1713830916863.json';
 
 function Recipes() {
     const location = useLocation();
+    const ingredients = location.state;
     const [recipeMessage, setRecipeMessage] = useState("");
 
     useEffect(() => {
         const getRecipe = async () => {
             try {
-                const response = await endpoints.getRecipe({ ingredients: ["Tomate", "Cebolla", "Limon", "Aceite", "Mayonesa"] });
+                const response = await endpoints.getRecipe({ ingredients: ingredients });
                 setRecipeMessage(response.message);
             } catch (error) {
                 console.error("Ocurrió un error al obtener la receta:", error);
@@ -20,24 +25,63 @@ function Recipes() {
         };
 
         getRecipe();
-    }, []);
+    }, [ingredients]);
 
-    // Pantalla de carga
     if (!recipeMessage) {
-        return <div>Cargando...</div>;
+        return (
+            <div>
+                <Navbar />
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', marginTop: '70px' }}>
+                    <Lottie
+                        options={{
+                            loop: true,
+                            autoplay: true,
+                            animationData: animationData,
+                        }}
+                        height={300}
+                        width={300}
+                    />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
+                    <Lottie
+                        options={{
+                            loop: true,
+                            autoplay: true,
+                            animationData: loading,
+                        }}
+                        height={200}
+                        width={200}
+                    />
+                </div>
+            </div>
+        );
     }
 
-    const titleIndex = recipeMessage.indexOf("\n\n");
+
+    function obtenerTitulo(recipeMessage) {
+        const regex = /Receta:\s*(.*)\n/;
+        const match = recipeMessage.match(regex);
+        if (match && match[1]) {
+            return match[1].trim();
+        }
+
+        const regexInicio = /^[A-Z].*?:/;
+        const matchInicio = recipeMessage.match(regexInicio);
+        if (matchInicio) {
+            return matchInicio[0].slice(0, -1).trim();
+        }
+
+        return null;
+    }
+
+    const title = obtenerTitulo(recipeMessage);
     const ingredientsIndex = recipeMessage.indexOf("\nIngredientes:\n");
     const instructionsIndex = recipeMessage.indexOf("\nInstrucciones:\n");
     const nutritionalInfoIndex = recipeMessage.indexOf("\nInformación nutricional (por porción):\n");
-
-    const title = recipeMessage.substring(0, titleIndex);
-    const ingredients = recipeMessage.substring(ingredientsIndex + "\nIngredientes:\n".length, instructionsIndex);
+    const ingredientsRecipe = recipeMessage.substring(ingredientsIndex + "\nIngredientes:\n".length, instructionsIndex);
     const instructions = recipeMessage.substring(instructionsIndex + "\nInstrucciones:\n".length, nutritionalInfoIndex);
     let nutritionalInfo = recipeMessage.substring(nutritionalInfoIndex + "\nInformación nutricional (por porción):\n".length);
 
-    // Remove the part after "Tiempo de preparación:"
     const prepTimeIndex = nutritionalInfo.indexOf("Tiempo de preparación:");
     if (prepTimeIndex !== -1) {
         nutritionalInfo = nutritionalInfo.substring(0, prepTimeIndex);
@@ -58,8 +102,8 @@ function Recipes() {
                             <Card.Title>Ingredientes</Card.Title>
                             <Card.Body>
                                 <ul className="list-unstyled">
-                                    {ingredients.split('\n').map((ingredient, index) => (
-                                        <li key={index}>{ingredient}</li>
+                                    {ingredientsRecipe.split('\n').map((ingredientsRecipe, index) => (
+                                        <li key={index}>{ingredientsRecipe}</li>
                                     ))}
                                 </ul>
                             </Card.Body>
@@ -88,6 +132,15 @@ function Recipes() {
                                 </ul>
                             </Card.Body>
                         </Card>
+                    </Col>
+                </Row>
+                <Row className="rowBottom justify-content-center mt-4">
+                    <Col xs={1} md={2} className="text-center">
+                        <Link to="/Foto">
+                            <Button className="buttonBack">
+                                &#8592; Volver a tomar foto
+                            </Button>
+                        </Link>
                     </Col>
                 </Row>
             </Container>

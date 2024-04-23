@@ -2,15 +2,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 50vh; 
+    height: 70vh; 
 }
 
 .container_izquierdo, .container_centro, .container_derecho {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80px; 
-    margin-bottom: 50px;
+    height: 10px; 
+    margin-top: 20px;
+    margin-bottom: 10px;
     margin-left: 10px; 
     margin-right: 10px; 
 }
@@ -28,18 +29,20 @@
     text-align: center;
 }
 
-
 .card {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .recipe-title {
     font-size: 2vw; 
     color: #974C06;
     font-family: 'Times New Roman', Times, serif;
-    margin-top: 50px;
+    margin-top: 70px;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -57,7 +60,26 @@
     height: 5vh;
 }
 
+.rowBottom{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+}
+
 .list-unstyled {
     list-style-type: none; 
     padding-left: 0; 
+}
+
+.buttonBack{
+    color: white;
+    background-color: #E47F21;
+    font-weight: bolder;
+    border: none;
+    border-radius: 10px;
+    filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.4));
+    font-size: larger;
+    cursor: pointer;
+    
 }
